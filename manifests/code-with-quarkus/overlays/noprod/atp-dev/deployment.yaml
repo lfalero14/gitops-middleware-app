@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-with-quarkus
+  labels:
+    app: code-with-quarkus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: code-with-quarkus
+  template:
+    metadata:
+      labels:
+        app: code-with-quarkus
+    spec:
+      containers:
+        - name: code-with-quarkus
+          image: quarkus
+          env:
+            - name: QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "http://otel-dev-collector.openshift-opentelemetry-operator.svc.cluster.local:4317"
+          ports:
+            - containerPort: 8080
